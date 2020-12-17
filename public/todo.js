@@ -1,6 +1,7 @@
 const url_string = window.location.href;
 const url = new URL(url_string);
 const itemId = url.searchParams.get("id");
+let isGenerated = false;
 
 //this function is used to GET with my API
 async function getToDoList() {
@@ -35,8 +36,10 @@ async function getIndiv(id) {
 //this function is used for when a button is clicked and what to retrieve
 function clickButton() {
   let listContainer = document.getElementById("myList");
+  if(isGenerated === false){
   getToDoList()
     .then(function (body) {
+      isGenerated = true;
       for (let i = 0; i < body.length; i++) {
         let node = document.createElement("p");
         node.setAttribute("data-id", body[i]._id);
@@ -56,12 +59,13 @@ function clickButton() {
           body[i]._id +
           '"><i class="fas fa-pen-alt fa-2x"></i></a>' + "<br>";
       }
-      
+    
       console.log("Didn't think we would make it this far");
     })
     .catch(function (err) {
       console.log(err);
     });
+}
 }
 //this function is used when trying to make a POST request
 async function postItem() {
@@ -149,13 +153,10 @@ function topFunction() {
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-window.onload = function() {
-  let isGenerated = false;
-  listGenerate();
-  }
-  function listGenerate(){
-  if(listGenerated === false){
-  isGenerated = true;
-  getToDoList(); //function that actually does the work of generating your list
-  }
-  }
+// //prevent duplication
+//   function listGenerate(){
+//   if(listGenerated === false){
+//   isGenerated = true;
+//   getToDoList(); //function that actually does the work of generating your list
+//   }
+//   }
