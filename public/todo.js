@@ -26,6 +26,7 @@ async function getIndiv(id) {
 
   const response = await fetch("/items/" + id, requestOptions);
   const body = await response.json();
+  
   if (response.status != 200) {
     throw Error(body.message);
   }
@@ -44,6 +45,7 @@ function clickButton() {
         let node = document.createElement("p");
         node.setAttribute("data-id", body[i]._id);
         listContainer.appendChild(node).innerHTML =
+        
           "Task Name: " +
           body[i].itemName +
           " <br><br><br> " +
